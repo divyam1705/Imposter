@@ -19,6 +19,7 @@ const JoinRoomScreen = () => {
       const joinedRoom = await joinRoom(roomId);
       if (joinedRoom) {
         alert(`Joined Room: ${roomId}`);
+        navigation.navigate('LobbyScreen', {roomId});
         // Navigate to room details or gameplay screen
         // navigation.navigate("RoomDetail", { roomId });
       }

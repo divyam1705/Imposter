@@ -5,8 +5,13 @@
     <uses-feature android:name="android.hardware.nfc" android:required="true"/>
     <uses-permission android:name="android.permission.NFC_TRANSACTION_EVENT" />
 <uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
 
     <application
+    
       android:name=".MainApplication"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
@@ -14,6 +19,10 @@
       android:allowBackup="false"
       android:theme="@style/AppTheme"
       android:supportsRtl="true">
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyDwz3TOnCfEMpIo6IO1XIN6M2Pkf6ZP_9I" />
+      
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

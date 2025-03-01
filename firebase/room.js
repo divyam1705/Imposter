@@ -1,4 +1,10 @@
-import {getFirestore, collection, doc, setDoc} from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  onSnapshot,
+} from 'firebase/firestore';
 import {app} from '../firebaseConfig';
 import {getAuth} from 'firebase/auth';
 
@@ -28,7 +34,7 @@ export const createRoom = async () => {
   const roomData = {
     roomId,
     hostId: user.uid,
-    players: [{userId: user.uid, name: userName}],
+    players: [{userId: user.uid, name: userName, ready: false}],
     status: 'waiting',
   };
 
@@ -43,6 +49,7 @@ export const createRoom = async () => {
 };
 
 import {updateDoc, arrayUnion, getDoc} from 'firebase/firestore';
+import {useEffect, useState} from 'react';
 
 // Function to join a room
 export const joinRoom = async roomId => {
@@ -68,7 +75,7 @@ export const joinRoom = async roomId => {
     );
     if (playerExists) {
       alert('You are already in the room!');
-      return;
+      return roomId;
     }
 
     // Add the user to the players list
@@ -81,6 +88,7 @@ export const joinRoom = async roomId => {
       players: arrayUnion({
         userId: user.uid,
         name: userName,
+        ready: false,
       }),
     });
 
@@ -91,3 +99,27 @@ export const joinRoom = async roomId => {
     throw error;
   }
 };
+
+const useRoom = roomId => {
+  const [room, setRoom] = useState(null);
+
+  useEffect(() => {
+    if (!roomId) {
+      return;
+    }
+
+    const roomRef = doc(db, 'rooms', roomId);
+
+    const unsubscribe = onSnapshot(roomRef, docSnap => {
+      if (docSnap.exists()) {
+        setRoom({id: docSnap.id, ...docSnap.data()});
+      }
+    });
+
+    return () => unsubscribe();
+  }, [roomId]);
+
+  return room;
+};
+
+export default useRoom;

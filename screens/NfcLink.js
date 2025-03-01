@@ -33,7 +33,7 @@ const NFCLinkScreen = () => {
         // NFC text payload starts with a language code (first byte), so we slice it
         const decodedData = String.fromCharCode(
           ...new Uint8Array(payload).slice(1),
-        );
+        ).slice(2);
 
         Alert.alert('NFC Read Success', `Stored ID: ${decodedData}`);
         setNfcData(decodedData);
@@ -74,11 +74,11 @@ const NFCLinkScreen = () => {
         <Text className="text-white font-semibold">Scan NFC</Text>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity
+      <TouchableOpacity
         className="bg-green-500 px-6 py-3 rounded-lg w-full items-center"
         onPress={handleWrite}>
         <Text className="text-white font-semibold">Write ID to NFC</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
       <TouchableOpacity
         className={`px-6 py-3 rounded-lg w-full items-center mt-3 ${
           nfcData ? 'bg-purple-500' : 'bg-gray-500'
