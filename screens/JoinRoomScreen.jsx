@@ -56,18 +56,19 @@ const JoinRoomScreen = () => {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             className="bg-green-500 w-80 py-2 rounded-lg"
             onPress={() => setScanning(true)} // Start scanning QR code
           >
             <Text className="text-center text-white font-semibold">
               Scan QR Code
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </>
       ) : (
         // QR Code Scanner UI
-        <QRCodeScanner
+        {
+          /* <QRCodeScanner
           onRead={handleScan}
           topContent={
             <Text className="text-white text-center">
@@ -81,7 +82,8 @@ const JoinRoomScreen = () => {
               <Text className="text-white text-center">Cancel</Text>
             </TouchableOpacity>
           }
-        />
+        /> */
+        }
       )}
     </View>
   );

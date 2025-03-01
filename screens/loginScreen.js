@@ -19,7 +19,7 @@ const LoginScreen = ({navigation}) => {
       await login(email, password);
       // Display success message
       console.log('Account created successfully!');
-      navigation.navigate('RoomScreen');
+      navigation.navigate('NfcLinkScreen');
     } catch (error) {
       alert(error.message);
     }

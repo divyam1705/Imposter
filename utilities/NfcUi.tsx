@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
-import { initNFC, readNFC, writeNFC } from './nfcService';
+import { initNFC, readNFC, writeNFC } from './NFCService';
 
 const NFCExample = () => {
     useEffect(() => {

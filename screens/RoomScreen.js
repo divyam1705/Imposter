@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {createRoom} from '../firebase/room';
 import {useNavigation} from '@react-navigation/native';
+import {auth} from '../firebaseConfig';
 
 const RoomScreen = () => {
   const navigation = useNavigation();
-
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (!user) {
+        navigation.navigate('LoginScreen');
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
   const handleCreateRoom = async () => {
     try {
       const roomId = await createRoom();

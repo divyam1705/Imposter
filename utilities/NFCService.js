@@ -20,7 +20,7 @@ export const readNFC = async () => {
 };
 
 // Function to write NFC card
-export const writeNFC = async (text: string) => {
+export const writeNFC = async text => {
   try {
     await NfcManager.requestTechnology(NfcTech.Ndef);
     const bytes = Ndef.encodeMessage([Ndef.textRecord(text)]);
