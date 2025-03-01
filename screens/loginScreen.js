@@ -1,11 +1,29 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {login} from '../firebase/login';
+import {signInWithGoogle} from '../firebase/googlesign';
+import {useNavigation} from '@react-navigation/native';
+// import {signInWithGoogle} from '../firebase/googlesign';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // const navigation = useNavigation();
 
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert('Please fill all fields!');
+      return;
+    }
+    try {
+      await login(email, password);
+      // Display success message
+      console.log('Account created successfully!');
+      navigation.navigate('RoomScreen');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <View className="flex-1 justify-center items-center bg-gray-900">
       <Text className="text-3xl font-bold text-white mb-6">Login</Text>
@@ -29,7 +47,7 @@ const LoginScreen = ({navigation}) => {
 
       <TouchableOpacity
         className="bg-blue-500 w-80 py-2 rounded-lg"
-        onPress={() => login(email, password)}>
+        onPress={() => handleLogin()}>
         <Text className="text-center text-white font-semibold">Login</Text>
       </TouchableOpacity>
 
@@ -38,6 +56,13 @@ const LoginScreen = ({navigation}) => {
         onPress={() => navigation.navigate('SignupScreen')}>
         <Text className="text-blue-400">Don't have an account? Sign up</Text>
       </TouchableOpacity>
+      {/* <TouchableOpacity
+        className="mt-4 bg-red-500 w-80 py-2 rounded-lg"
+        onPress={signInWithGoogle}>
+        <Text className="text-center text-white font-semibold">
+          Sign in with Google
+        </Text>
+      </TouchableOpacity> */}
     </View>
   );
 };

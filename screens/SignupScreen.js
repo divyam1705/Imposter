@@ -1,45 +1,67 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-import {signUp} from '../firebase/account';
+import {signUpWithEmail} from '../firebase/account';
+import {useNavigation} from '@react-navigation/native';
 
-const SignupScreen = ({navigation}) => {
+const SignUpScreen = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigation = useNavigation();
+
+  const handleSignUp = async () => {
+    if (!name || !email || !password) {
+      alert('Please fill all fields!');
+      return;
+    }
+    try {
+      await signUpWithEmail(name, email, password);
+      // Display success message
+      console.log('Account created successfully!');
+      navigation.navigate('RoomScreen');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
-    <View className="flex-1 justify-center items-center bg-gray-900">
+    <View className="flex-1 justify-center items-center bg-gray-900 p-6">
       <Text className="text-3xl font-bold text-white mb-6">Sign Up</Text>
 
       <TextInput
-        className="w-80 bg-gray-800 text-white px-4 py-2 rounded-lg mb-3"
+        className="bg-gray-800 text-white px-4 py-2 rounded-lg w-80 mb-3"
+        placeholder="Full Name"
+        placeholderTextColor="#aaa"
+        value={name}
+        onChangeText={setName}
+      />
+
+      <TextInput
+        className="bg-gray-800 text-white px-4 py-2 rounded-lg w-80 mb-3"
         placeholder="Email"
-        placeholderTextColor="gray"
+        placeholderTextColor="#aaa"
+        keyboardType="email-address"
         value={email}
         onChangeText={setEmail}
       />
 
       <TextInput
-        className="w-80 bg-gray-800 text-white px-4 py-2 rounded-lg mb-3"
+        className="bg-gray-800 text-white px-4 py-2 rounded-lg w-80 mb-3"
         placeholder="Password"
-        placeholderTextColor="gray"
+        placeholderTextColor="#aaa"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
 
       <TouchableOpacity
-        className="bg-green-500 w-80 py-2 rounded-lg"
-        onPress={() => signUp(email, password)}>
+        className="bg-blue-500 w-80 py-2 rounded-lg"
+        onPress={handleSignUp}>
         <Text className="text-center text-white font-semibold">Sign Up</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        className="mt-4"
-        onPress={() => navigation.navigate('LoginScreen')}>
-        <Text className="text-blue-400">Already have an account? Login</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default SignupScreen;
+export default SignUpScreen;

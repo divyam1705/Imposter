@@ -4,7 +4,7 @@
  *
  * @format
  */
-
+import './global.css';
 import React from 'react';
 import type { PropsWithChildren } from 'react';
 import {
@@ -28,6 +28,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/loginScreen';
 import SignupScreen from './screens/SignupScreen';
+import JoinRoomScreen from './screens/JoinRoomScreen';
+import RoomScreen from './screens/RoomScreen';
+import RoomDetailScreen from './screens/RoomDetailScreen';
 
 
 
@@ -54,6 +57,11 @@ function App(): React.JSX.Element {
       <Stack.Navigator>
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} />
+        <Stack.Screen name="JoinRoom" component={JoinRoomScreen} />
+        <Stack.Screen name="RoomScreen" component={RoomScreen} />
+        <Stack.Screen name="RoomDetailScreen" component={RoomDetailScreen} />
+
+        {/* <Stack.Screen name="CreateRoom" component={CreateRoomScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
