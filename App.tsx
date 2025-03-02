@@ -94,7 +94,15 @@ function App(): React.JSX.Element {
         alert('Error logging out');
       });
   };
-
+  const options = {
+    headerTitle: '',
+    headerShown: true,
+    headerStyle: {
+      backgroundColor: 'black', // Change background color
+    },
+    headerRight: () => (
+      <LogOutButton onPress={handleLogout} />),
+  };
 
   return (
     <NavigationContainer >
@@ -182,24 +190,11 @@ function App(): React.JSX.Element {
           }}
         />
         <Stack.Screen name="LobbyScreen" component={LobbyScreen}
-          options={{
-            headerTitle: '',
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: 'black', // Change background color
-            },
-            headerRight: () => (
-              <LogOutButton onPress={handleLogout} />),
-          }} />
+          options={options} />
         <Stack.Screen name="LoadingScreen" component={LoadingScreen} options={{
           headerShown: false,
         }} />
-        <Stack.Screen name="GameScreen" component={GameScreen} options={{
-          headerShown: true,
-          headerRight: () => (
-            <LogOutButton onPress={handleLogout} />),
-
-        }} />
+        <Stack.Screen name="GameScreen" component={GameScreen} options={options} />
         <Stack.Screen name="ReportScreen" component={ReportScreen} options={{
           headerShown: false,
           // headerRight: () => (

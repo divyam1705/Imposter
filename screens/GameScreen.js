@@ -38,6 +38,19 @@ const GameScreen = ({route, navigation}) => {
   const auth = getAuth();
   const user = auth.currentUser;
   const room = useRoom(roomId); // Get room data
+  const [isImposter, setIsImposter] = React.useState(false);
+
+  useEffect(() => {
+    if (room && room.players) {
+      // console.log(user.uid);
+      const imposterStatus = Object.values(room.players).some(
+        player => player.userId == user.uid && player.imposter == true,
+      );
+      // console.log(room.players);
+      // console.log(imposterStatus);
+      setIsImposter(imposterStatus);
+    }
+  }, [room, user]);
   //   const {roomId} = useRoom(); // Get room ID
 
   // const requestLocationPermission = async () => {
@@ -61,20 +74,20 @@ const GameScreen = ({route, navigation}) => {
   // }, []);
 
   return (
-    <View style={{flex: 1, backgroundColor: '#1a1a1a'}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       {/* Header Section */}
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           paddingHorizontal: 16,
           paddingVertical: 12,
-          backgroundColor: '#333',
+          backgroundColor: 'white',
         }}>
-        <Text style={{color: '#fff', fontSize: 18, fontWeight: 'bold'}}>
-          Room: {roomId}
-        </Text>
+        <TouchableOpacity className="bg-blue-500 flex justify-center items-center px-8 py-5 rounded-xl ">
+          <Text className="text-2xl font-bold text-white ">{roomId}</Text>
+        </TouchableOpacity>
         {/* <TouchableOpacity
           onPress={logout}
           style={{backgroundColor: '#e74c3c', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8}}>
@@ -112,13 +125,15 @@ const GameScreen = ({route, navigation}) => {
           marginTop: 16,
           // marginHorizontal: 12,
         }}>
-        <TouchableOpacity
-          onPress={() => handleScan(roomId)}
-          style={[styles.button, {backgroundColor: '#e74c3c'}]}>
-          <Text style={styles.buttonText}>
-            <Text style={{fontSize: 24}}>🔪</Text> Kill
-          </Text>
-        </TouchableOpacity>
+        {isImposter && (
+          <TouchableOpacity
+            onPress={() => handleScan(roomId)}
+            style={[styles.button, {backgroundColor: '#e74c3c'}]}>
+            <Text style={styles.buttonText}>
+              <Text style={{fontSize: 24}}>🔪</Text> Kill
+            </Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity
           onPress={() =>
@@ -133,11 +148,14 @@ const GameScreen = ({route, navigation}) => {
             <Text style={{fontSize: 24}}>📢</Text> Report
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, {backgroundColor: '#3498db'}]}>
-          <Text style={styles.buttonText}>
-            <Text style={{fontSize: 24}}>❄️</Text> Freeze
-          </Text>
-        </TouchableOpacity>
+        {isImposter && (
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#3498db'}]}>
+            <Text style={styles.buttonText}>
+              <Text style={{fontSize: 24}}>❄️</Text> Freeze
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -145,7 +163,7 @@ const GameScreen = ({route, navigation}) => {
 
 const styles = {
   button: {
-    // backgroundColor: '#3498db',
+    backgroundColor: '#3498db',
     flex: 1,
     marginHorizontal: 4,
     paddingVertical: 16,

@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     main: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: 'black',
         flex: 1,
         alignItems: 'center',
     },
@@ -181,11 +181,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     messageContainer: {
-        position: 'absolute',
-        bottom: 20,
-        left: 0,
-        right: 0,
-        alignItems: 'center',
+        // position: 'absolute',
+        // bottom: 20,
+        // left: 0,
+        // right: 0,
+        // alignItems: 'center',
     },
     info: {
         backgroundColor: '#ffffe0',
