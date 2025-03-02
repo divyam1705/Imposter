@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/geolocation": "^3.4.0",
     "@react-native-firebase/app": "^21.11.0",
     "@react-native-firebase/database": "^21.11.0",
     "@react-native-google-signin/google-signin": "^13.2.0",

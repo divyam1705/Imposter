@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, FlatList, TouchableOpacity, Alert} from 'react-native';
 import {db, auth} from '../firebaseConfig';
 import {doc, updateDoc} from 'firebase/firestore';
@@ -8,7 +8,11 @@ const LobbyScreen = ({route, navigation}) => {
   const {roomId} = route.params;
   const room = useRoom(roomId);
   const currentUser = auth.currentUser;
-
+  useEffect(() => {
+    if (room && room.gameStarted) {
+      navigation.navigate('GameScreen', {roomId});
+    }
+  }, [navigation, room, roomId]);
   if (!room) {
     return <Text>Loading room...</Text>;
   }
@@ -18,14 +22,11 @@ const LobbyScreen = ({route, navigation}) => {
       return;
     }
 
-    const updatedPlayers = room.players.map(player => {
-      //   console.log(player);
-      if (player.userId === currentUser.uid) {
-        // console.log(player.ready, !player.ready);
-        return {...player, ready: !player.ready};
-      }
-      return player;
-    });
+    const updatedPlayers = {...room.players};
+    if (updatedPlayers[currentUser.uid]) {
+      updatedPlayers[currentUser.uid].ready =
+        !updatedPlayers[currentUser.uid].ready;
+    }
     // console.log(updatedPlayers);
     await updateDoc(doc(db, 'rooms', roomId), {players: updatedPlayers});
   };
@@ -35,7 +36,7 @@ const LobbyScreen = ({route, navigation}) => {
       return;
     }
 
-    const allReady = room.players.every(player => player.ready);
+    const allReady = Object.values(room.players).every(player => player.ready);
     if (!allReady) {
       Alert.alert('Not everyone is ready!');
       return;
@@ -50,11 +51,11 @@ const LobbyScreen = ({route, navigation}) => {
       <Text className="text-white text-xl font-bold mb-4">Room: {roomId}</Text>
 
       <FlatList
-        data={room.players}
-        keyExtractor={item => item.id}
+        data={Object.values(room.players)}
+        keyExtractor={item => item.uid}
         renderItem={({item}) => (
           <View
-            key={item.id}
+            key={item.uid}
             className="flex-row justify-between bg-gray-800 p-4 rounded-lg mb-2">
             <Text className="text-white">{item.name}</Text>
             <Text className={`text-${item.ready ? 'green' : 'red'}-500`}>

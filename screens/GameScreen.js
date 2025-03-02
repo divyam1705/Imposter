@@ -5,10 +5,14 @@ import GameMap from './map/GameMap'; // Import the map component
 import useRoom from '../firebase/room';
 // import {useAuth} from '../firebase/account';
 import {getAuth} from 'firebase/auth';
+// import {firebase} from '@react-native-firebase/database';
+
 // import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 // import { getAuth } from 'firebase/auth';
-
+// if (!firebase.apps.length) {
+// firebase.initializeApp(firebaseConfig);
+// }
 const GameScreen = ({route, navigation}) => {
   //   const navigation = useNavigation();
   const {roomId} = route.params;
@@ -51,7 +55,7 @@ const GameScreen = ({route, navigation}) => {
 
       {/* Game Map */}
       <View className="flex-1">
-        <GameMap roomId={roomId} userId={user.id} />
+        <GameMap roomId={roomId} userId={user.uid} />
       </View>
     </View>
   );

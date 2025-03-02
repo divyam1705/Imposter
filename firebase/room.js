@@ -34,7 +34,15 @@ export const createRoom = async () => {
   const roomData = {
     roomId,
     hostId: user.uid,
-    players: [{userId: user.uid, name: userName, ready: false}],
+    players: {
+      [user.uid]: {
+        name: userName,
+        ready: false,
+        userId: user.uid,
+        lat: 0,
+        lng: 0,
+      },
+    },
     status: 'waiting',
   };
 
@@ -70,9 +78,7 @@ export const joinRoom = async roomId => {
 
     // Check if user is already in the room
     const roomData = roomSnap.data();
-    const playerExists = roomData.players.some(
-      player => player.userId === user.uid,
-    );
+    const playerExists = roomData.players.hasOwnProperty(user.uid);
     if (playerExists) {
       alert('You are already in the room!');
       return roomId;
@@ -82,15 +88,23 @@ export const joinRoom = async roomId => {
     const userRef = doc(db, 'users', user.uid);
     const userSnap = await getDoc(userRef);
     console.log(userSnap);
-    const userName = userSnap.exists() ? userSnap.data().name : 'lol';
+    const userName = userSnap.exists() ? userSnap.data().name : 'No Name';
 
-    await updateDoc(roomRef, {
-      players: arrayUnion({
-        userId: user.uid,
-        name: userName,
-        ready: false,
-      }),
-    });
+    await setDoc(
+      roomRef,
+      {
+        players: {
+          [user.uid]: {
+            userId: user.uid,
+            name: userName,
+            ready: false,
+            lat: 0,
+            lng: 0,
+          },
+        },
+      },
+      {merge: true},
+    );
 
     console.log(`Joined Room: ${roomId}`);
     return roomId; // Return the room ID
