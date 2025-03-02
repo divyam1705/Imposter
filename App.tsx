@@ -38,6 +38,7 @@ import NFCLinkScreen from './screens/NfcLink';
 import LobbyScreen from './screens/LobbyScreen';
 import GameScreen from './screens/GameScreen';
 import LoadingScreen from './screens/RevealScreen';
+import ReportScreen from './screens/ReportScreen';
 // import { getAuth, signOut } from 'firebase/auth';
 
 
@@ -150,6 +151,13 @@ function App(): React.JSX.Element {
           headerRight: () => (
             <Button title="Logout" onPress={handleLogout} />
           ),
+
+        }} />
+        <Stack.Screen name="ReportScreen" component={ReportScreen} options={{
+          headerShown: false,
+          // headerRight: () => (
+          //   <Button title="Logout" onPress={handleLogout} />
+          // ),
 
         }} />
 

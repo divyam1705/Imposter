@@ -42,6 +42,7 @@ export const createRoom = async () => {
         lat: 0,
         lng: 0,
         imposter: false,
+        alive: true,
       },
     },
     status: 'waiting',
@@ -59,6 +60,7 @@ export const createRoom = async () => {
 
 import {updateDoc, arrayUnion, getDoc} from 'firebase/firestore';
 import {useEffect, useState} from 'react';
+import {Alert} from 'react-native';
 
 // Function to join a room
 export const joinRoom = async roomId => {
@@ -102,6 +104,7 @@ export const joinRoom = async roomId => {
             lat: 0,
             lng: 0,
             imposter: false,
+            alive: true,
           },
         },
       },
@@ -151,6 +154,27 @@ export const assignImposter = players => {
   };
 
   return updatedPlayers; // Return updated players
+};
+
+export const killPlayer = async (scannedUid, roomId) => {
+  console.log('killing', scannedUid, roomId);
+  try {
+    // const roomRef = ;
+    // console.log('loklok');
+    const playerRef = doc(db, 'rooms', roomId);
+
+    await updateDoc(playerRef, {
+      [`players.${scannedUid}.alive`]: false, // ✅ Correct way to update a nested field
+    });
+    const playerSnap = await getDoc(doc(db, 'users', scannedUid));
+    const playerName = playerSnap.exists()
+      ? playerSnap.data().name
+      : 'Unknown Player';
+    Alert.alert('Player has been eliminated!');
+    // (`Player ${scannedUid} has been eliminated!`);
+  } catch (error) {
+    console.error('Error updating Firestore:', error);
+  }
 };
 
 export default useRoom;
