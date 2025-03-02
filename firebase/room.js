@@ -41,6 +41,7 @@ export const createRoom = async () => {
         userId: user.uid,
         lat: 0,
         lng: 0,
+        imposter: false,
       },
     },
     status: 'waiting',
@@ -100,6 +101,7 @@ export const joinRoom = async roomId => {
             ready: false,
             lat: 0,
             lng: 0,
+            imposter: false,
           },
         },
       },
@@ -134,6 +136,21 @@ const useRoom = roomId => {
   }, [roomId]);
 
   return room;
+};
+
+export const assignImposter = players => {
+  const playersArray = Object.keys(players); // Convert players to an array of player IDs
+  const randomPlayerId =
+    playersArray[Math.floor(Math.random() * playersArray.length)]; // Select a random player
+
+  // Mark the selected player as imposter
+  const updatedPlayers = {...players}; // Create a copy of the players object
+  updatedPlayers[randomPlayerId] = {
+    ...updatedPlayers[randomPlayerId],
+    imposter: true, // Add imposter property
+  };
+
+  return updatedPlayers; // Return updated players
 };
 
 export default useRoom;

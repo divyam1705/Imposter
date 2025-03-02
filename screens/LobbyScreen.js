@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {View, Text, FlatList, TouchableOpacity, Alert} from 'react-native';
 import {db, auth} from '../firebaseConfig';
 import {doc, updateDoc} from 'firebase/firestore';
-import useRoom from '../firebase/room';
+import useRoom, {assignImposter} from '../firebase/room';
 
 const LobbyScreen = ({route, navigation}) => {
   const {roomId} = route.params;
@@ -41,9 +41,14 @@ const LobbyScreen = ({route, navigation}) => {
       Alert.alert('Not everyone is ready!');
       return;
     }
-
+    const updatedPlayers = assignImposter(room.players);
+    await updateDoc(doc(db, 'rooms', roomId), {players: updatedPlayers});
     await updateDoc(doc(db, 'rooms', roomId), {gameStarted: true});
-    navigation.navigate('GameScreen', {roomId});
+    navigation.navigate('LoadingScreen', {
+      players: room.players,
+      roomId,
+      userId: currentUser.uid,
+    });
   };
 
   return (

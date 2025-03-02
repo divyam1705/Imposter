@@ -37,6 +37,7 @@ import { signOut } from 'firebase/auth';
 import NFCLinkScreen from './screens/NfcLink';
 import LobbyScreen from './screens/LobbyScreen';
 import GameScreen from './screens/GameScreen';
+import LoadingScreen from './screens/RevealScreen';
 // import { getAuth, signOut } from 'firebase/auth';
 
 
@@ -141,11 +142,15 @@ function App(): React.JSX.Element {
             <Button title="Logout" onPress={handleLogout} />
           ),
         }} />
+        <Stack.Screen name="LoadingScreen" component={LoadingScreen} options={{
+          headerShown: false,
+        }} />
         <Stack.Screen name="GameScreen" component={GameScreen} options={{
           headerShown: true,
           headerRight: () => (
             <Button title="Logout" onPress={handleLogout} />
           ),
+
         }} />
 
 

@@ -54,7 +54,7 @@ const GameScreen = ({route, navigation}) => {
       </View>
 
       {/* Game Map */}
-      <View className="flex-1">
+      <View className="h-[56vh] rounded-xl mx-3 overflow-hidden">
         <GameMap roomId={roomId} userId={user.uid} />
       </View>
     </View>
