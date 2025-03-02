@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {login} from '../firebase/login';
-import {signInWithGoogle} from '../firebase/googlesign';
-import {useNavigation} from '@react-navigation/native';
+
 // import {signInWithGoogle} from '../firebase/googlesign';
 
 const LoginScreen = ({navigation}) => {

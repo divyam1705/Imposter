@@ -16,10 +16,15 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import Geolocation from 'react-native-geolocation-service';
+import GoogleMapsMarker, {getRandomLocation, images} from './puzzle';
+import {Image} from 'react-native-svg';
 
 const GameMap = ({roomId, userId}) => {
   const [players, setPlayers] = useState({});
   const [currentLocation, setCurrentLocation] = useState(null);
+  // const [location, setLocation] = useState(null);
+  const [randomLocations, setRandomLocations] = useState({});
+  const [assignPuzzle, setAssignPuzzle] = useState(false);
 
   const requestLocationPermission = async () => {
     if (Platform.OS === 'android') {
@@ -107,6 +112,37 @@ const GameMap = ({roomId, userId}) => {
     trackLocation();
   }, [roomId, userId]);
 
+  useEffect(() => {
+    console.log(' trying to assign puzzle', currentLocation);
+
+    if (!currentLocation) {
+      console.log('No location yet');
+      return;
+    }
+    console.log(assignPuzzle);
+    if (assignPuzzle) {
+      return;
+    }
+    console.log('still trying to assign puzzle');
+    const userLocation = {
+      lat: currentLocation.latitude,
+      lng: currentLocation.longitude,
+    };
+
+    // setLocation(userLocation);
+
+    // Generate 9 random locations and assign numbers (1-9)
+    const locations = {};
+    for (let i = 0; i < 9; i++) {
+      const randomPoint = getRandomLocation(userLocation, 20);
+      locations[`${randomPoint.lat},${randomPoint.lng}`] = i + 1; // Assign a number
+    }
+    console.log(locations);
+
+    setRandomLocations(locations);
+    setAssignPuzzle(true);
+  }, [assignPuzzle, currentLocation]);
+
   return (
     <View style={styles.container}>
       <MapView
@@ -126,6 +162,24 @@ const GameMap = ({roomId, userId}) => {
         showsCompass={false}
         showsUserLocation={true}>
         {/* Display all players on the map */}
+        {Object.entries(randomLocations).map(([key, number]) => {
+          const [lat, lng] = key.split(',').map(Number);
+          return (
+            <Marker
+              key={key}
+              // position={{lat, lng}}
+              coordinate={{
+                latitude: lat || 0,
+                longitude: lng || 0,
+              }}
+              image={images[number - 1]}
+              style={{width: 5, height: 5}}
+              // icon={{
+              //   url: images[number - 1], // Use image path
+              // }}
+            />
+          );
+        })}
         {Object.keys(players).map(playerId => {
           const player = players[playerId];
           console.log(player);

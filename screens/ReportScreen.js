@@ -20,28 +20,12 @@ const ReportScreen = ({route, navigation}) => {
   const [voted, setVoted] = useState(false);
 
   useEffect(() => {
-    const initAgora = async () => {
-      console.log('in');
-      const rtcEngine = await RtcEngine.create(APP_ID);
-      console.log('hEEE1');
-      await rtcEngine.enableAudio();
-      console.log('HERENOW');
-      await rtcEngine.joinChannel(token, CHANNEL_NAME, null, 0);
-
-      setEngine(rtcEngine);
-      setJoined(true);
-    };
-
-    initAgora();
-
     const timer = setTimeout(async () => {
-      await engine?.leaveChannel(); // Leave voice chat
       handleVotingResults();
     }, 30000);
 
     return () => {
       clearTimeout(timer);
-      engine?.destroy();
     };
   }, [engine, handleVotingResults, navigation]);
 
@@ -66,7 +50,7 @@ const ReportScreen = ({route, navigation}) => {
     });
 
     console.log(`Eliminated: ${eliminatedPlayer}`);
-    navigation.replace('GameScreen');
+    navigation.replace('GameScreen', {roomId});
   }, [roomId, navigation]);
 
   const castVote = async voteFor => {
@@ -85,39 +69,15 @@ const ReportScreen = ({route, navigation}) => {
     console.log(`User ${userId} voted for ${voteFor}`);
   };
 
-  //   const handleVotingResults = async () => {
-  //     const roomSnap = await getDoc(doc(db, 'rooms', roomId));
-  //     const votes = roomSnap.data().votes || {};
-
-  //     // Count votes
-  //     const voteCounts = {};
-  //     Object.values(votes).forEach(vote => {
-  //       voteCounts[vote] = (voteCounts[vote] || 0) + 1;
-  //     });
-
-  //     // Find the player with the most votes
-  //     const eliminatedPlayer = Object.keys(voteCounts).reduce((a, b) =>
-  //       voteCounts[a] > voteCounts[b] ? a : b,
-  //     );
-
-  //     // Update Firestore to eliminate the player
-  //     await updateDoc(doc(db, 'rooms', roomId), {
-  //       [`players.${eliminatedPlayer}.alive`]: false,
-  //     });
-
-  //     console.log(`Eliminated: ${eliminatedPlayer}`);
-  //     navigation.replace('GameScreen');
-  //   };
-
   return (
-    <View style={{flex: 1, padding: 20}}>
-      <AgoraApp />
+    <View className="!bg-black" style={{flex: 1, padding: 40}}>
       <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 10}}>
-        Discussion Time! (45s)
+        Discussion Time! (30s)
       </Text>
+      <AgoraApp />
 
       {/* Voice Controls */}
-      {joined && (
+      {/* {joined && (
         <Button
           title={muted ? 'Unmute' : 'Mute'}
           onPress={() => {
@@ -125,7 +85,7 @@ const ReportScreen = ({route, navigation}) => {
             engine?.muteLocalAudioStream(!muted);
           }}
         />
-      )}
+      )} */}
 
       {/* Voting List */}
       <FlatList

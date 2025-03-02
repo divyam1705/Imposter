@@ -38,15 +38,50 @@ const AgoraApp = () => {
     const eventHandler = useRef<IRtcEngineEventHandler | null>(null); // Implement callback functions
 
     useEffect(() => {
+        const join = async () => {
+            if (isJoined) {
+                return;
+            }
+            try {
+                // Join the channel as a broadcaster
+                agoraEngineRef.current?.joinChannel(token, channelName, localUid, {
+                    // Set channel profile to live broadcast
+                    channelProfile: ChannelProfileType.ChannelProfileCommunication,
+                    // Set user role to broadcaster
+                    clientRoleType: ClientRoleType.ClientRoleBroadcaster,
+                    // Publish audio collected by the microphone
+                    publishMicrophoneTrack: true,
+                    // Automatically subscribe to all audio streams
+                    autoSubscribeAudio: true,
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        const leave = () => {
+            try {
+                // Call leaveChannel method to leave the channel
+                agoraEngineRef.current?.leaveChannel();
+                setRemoteUid(0);
+                setIsJoined(false);
+                showMessage('Left the channel');
+            } catch (e) {
+                console.log(e);
+            }
+        };
         const init = async () => {
             await setupVoiceSDKEngine();
             setupEventHandler();
         };
-        init();
+        const timer = setTimeout(async () => {
+            leave();
+        }, 30000);
+        init(); join();
         return () => {
+            clearTimeout(timer);
             cleanupAgoraEngine(); // Ensure this is synchronous
         };
-    }, []); // Empty dependency array ensures it runs only once
+    }, [isJoined]); // Empty dependency array ensures it runs only once
 
     const setupEventHandler = () => {
         eventHandler.current = {
@@ -78,39 +113,10 @@ const AgoraApp = () => {
     };
 
     // Define the join method called after clicking the join channel button
-    const join = async () => {
-        if (isJoined) {
-            return;
-        }
-        try {
-            // Join the channel as a broadcaster
-            agoraEngineRef.current?.joinChannel(token, channelName, localUid, {
-                // Set channel profile to live broadcast
-                channelProfile: ChannelProfileType.ChannelProfileCommunication,
-                // Set user role to broadcaster
-                clientRoleType: ClientRoleType.ClientRoleBroadcaster,
-                // Publish audio collected by the microphone
-                publishMicrophoneTrack: true,
-                // Automatically subscribe to all audio streams
-                autoSubscribeAudio: true,
-            });
-        } catch (e) {
-            console.log(e);
-        }
-    };
+
 
     // Define the leave method called after clicking the leave channel button
-    const leave = () => {
-        try {
-            // Call leaveChannel method to leave the channel
-            agoraEngineRef.current?.leaveChannel();
-            setRemoteUid(0);
-            setIsJoined(false);
-            showMessage('Left the channel');
-        } catch (e) {
-            console.log(e);
-        }
-    };
+
 
     const cleanupAgoraEngine = () => {
         return () => {
@@ -122,14 +128,14 @@ const AgoraApp = () => {
     // Render user interface
     return (
         <SafeAreaView style={styles.main}>
-            <Text style={styles.head}>Agora Voice SDK Quickstart</Text>
+            {/* <Text style={styles.head}>Agora Voice SDK Quickstart</Text> */}
             <View style={styles.btnContainer}>
-                <Text onPress={join} style={styles.button}>
+                {/* <Text onPress={join} style={styles.button}>
                     Join Channel
-                </Text>
-                <Text onPress={leave} style={styles.button}>
+                </Text> */}
+                {/* <Text onPress={leave} style={styles.button}>
                     Leave Channel
-                </Text>
+                </Text> */}
             </View>
             {isJoined ? (
                 <Text>You joined</Text>
@@ -163,6 +169,7 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     main: {
+        backgroundColor: '#f0f0f0',
         flex: 1,
         alignItems: 'center',
     },

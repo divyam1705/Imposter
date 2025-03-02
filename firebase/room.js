@@ -144,7 +144,7 @@ const useRoom = roomId => {
 export const assignImposter = players => {
   const playersArray = Object.keys(players); // Convert players to an array of player IDs
   const randomPlayerId =
-    playersArray[Math.floor(Math.random() * playersArray.length)]; // Select a random player
+    playersArray[Math.floor(Math.random() * (playersArray.length - 1))]; // Select a random player
 
   // Mark the selected player as imposter
   const updatedPlayers = {...players}; // Create a copy of the players object
