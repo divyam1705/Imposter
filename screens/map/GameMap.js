@@ -19,6 +19,11 @@ import Geolocation from 'react-native-geolocation-service';
 import GoogleMapsMarker, {getRandomLocation, images} from './puzzle';
 import {Image} from 'react-native-svg';
 
+const pinkIcon = require('../../assets/icons/pink.png');
+const redIcon = require('../../assets/icons/red.png');
+const blueIcon = require('../../assets/icons/blue.png');
+const grayIcon = require('../../assets/icons/gray.png');
+const purpleIcon = require('../../assets/icons/purple.png');
 const GameMap = ({roomId, userId}) => {
   const [players, setPlayers] = useState({});
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -142,66 +147,80 @@ const GameMap = ({roomId, userId}) => {
     setRandomLocations(locations);
     setAssignPuzzle(true);
   }, [assignPuzzle, currentLocation]);
-
+  const colors = ['pink', 'red', 'blue', 'gray', 'purple'];
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        customMapStyle={DARK_MAP_STYLE}
-        region={{
-          latitude: currentLocation?.latitude || 38.624,
-          longitude: currentLocation?.longitude || -90.184,
-          latitudeDelta: 0.0005,
-          longitudeDelta: 0.0005,
-        }}
-        followsUserLocation={true}
-        rotateEnabled={false}
-        // pitchEnabled={false}
-        // zoomEnabled={false}
-        showsScale={false}
-        showsCompass={false}
-        showsUserLocation={true}>
-        {/* Display all players on the map */}
-        {Object.entries(randomLocations).map(([key, number]) => {
-          const [lat, lng] = key.split(',').map(Number);
-          return (
-            <Marker
-              key={key}
-              // position={{lat, lng}}
-              coordinate={{
-                latitude: lat || 0,
-                longitude: lng || 0,
-              }}
-              image={images[number - 1]}
-              style={{width: 5, height: 5}}
-              // icon={{
-              //   url: images[number - 1], // Use image path
-              // }}
-            />
-          );
-        })}
-        {Object.keys(players).map(playerId => {
-          const player = players[playerId];
-          console.log(player);
-          return (
-            <Marker
-              key={playerId}
-              coordinate={{
-                latitude: player.lat || 0,
-                longitude: player.lng || 0,
-              }}
-              title={player.name}
-              pinColor={
-                playerId === userId
-                  ? 'yellow'
-                  : player.alive
-                  ? 'orange'
-                  : 'black'
-              }
-            />
-          );
-        })}
-      </MapView>
+      {randomLocations && (
+        <MapView
+          style={styles.map}
+          customMapStyle={DARK_MAP_STYLE}
+          region={{
+            latitude: currentLocation?.latitude || 38.624,
+            longitude: currentLocation?.longitude || -90.184,
+            latitudeDelta: 0.0005,
+            longitudeDelta: 0.0005,
+          }}
+          followsUserLocation={true}
+          rotateEnabled={false}
+          // pitchEnabled={false}
+          // zoomEnabled={false}
+          showsScale={false}
+          showsCompass={false}
+          showsUserLocation={true}>
+          {/* Display all players on the map */}
+          {Object.entries(randomLocations).map(([key, number]) => {
+            const [lat, lng] = key.split(',').map(Number);
+            return (
+              <Marker
+                key={key}
+                // position={{lat, lng}}
+                coordinate={{
+                  latitude: lat || 0,
+                  longitude: lng || 0,
+                }}
+                image={images[number - 1]}
+                style={{width: 2, height: 2}}
+                // icon={{
+                //   url: images[number - 1], // Use image path
+                // }}
+              />
+            );
+          })}
+          {Object.keys(players).map((playerId, index) => {
+            const player = players[playerId];
+            console.log(player);
+            return (
+              <Marker
+                key={playerId}
+                coordinate={{
+                  latitude: player.lat || 0,
+                  longitude: player.lng || 0,
+                }}
+                image={
+                  index % colors.length === 0
+                    ? pinkIcon
+                    : index % colors.length === 1
+                    ? redIcon
+                    : index % colors.length === 2
+                    ? blueIcon
+                    : index % colors.length === 3
+                    ? grayIcon
+                    : purpleIcon
+                } // Use static image based on index
+                style={{width: 5, height: 5}}
+                title={player.name}
+                pinColor={
+                  playerId === userId
+                    ? 'yellow'
+                    : player.alive
+                    ? 'orange'
+                    : 'black'
+                }
+              />
+            );
+          })}
+        </MapView>
+      )}
     </View>
   );
 };

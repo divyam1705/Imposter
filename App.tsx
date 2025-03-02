@@ -9,10 +9,13 @@ import React, { useEffect, useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import {
   Button,
+  ImageBackground,
+  LogBox,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -40,15 +43,24 @@ import GameScreen from './screens/GameScreen';
 import LoadingScreen from './screens/RevealScreen';
 import ReportScreen from './screens/ReportScreen';
 // import { getAuth, signOut } from 'firebase/auth';
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const Stack = createStackNavigator();
 
 
+// LogBox.ignoreAllLogs(true); //temp
+
+
+const LogOutButton = ({ onPress }: { onPress: () => void }) => {
+  return (
+    <TouchableOpacity onPress={onPress} className="px-5 ">
+      <Icon name="logout" size={30} color="white" className="font-light text-neutral-500" />
+    </TouchableOpacity>
+  );
+};
 
 function App(): React.JSX.Element {
-
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   /*
@@ -83,18 +95,23 @@ function App(): React.JSX.Element {
       });
   };
 
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
+    <NavigationContainer >
+
+      <Stack.Navigator >
         {isLoggedIn ? (
           <Stack.Screen
             name="Room"
             component={RoomScreen}
             options={{
-              headerShown: false,
+              headerTitle: '',
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: 'black', // Change background color
+              },
               headerRight: () => (
-                <Button title="Logout" onPress={handleLogout} />
-              ),
+                <LogOutButton onPress={handleLogout} />),
             }}
           />
         ) : (
@@ -116,41 +133,71 @@ function App(): React.JSX.Element {
         <Stack.Screen name="JoinRoom" component={JoinRoomScreen} options={{
           headerShown: true,
           headerRight: () => (
-            <Button title="Logout" onPress={handleLogout} />
-          ),
+            <LogOutButton onPress={handleLogout} />),
         }} />
-        <Stack.Screen name="RoomScreen" component={RoomScreen} options={{
-          headerShown: true,
-          headerRight: () => (
-            <Button title="Logout" onPress={handleLogout} />
-          ),
-        }} />
-        <Stack.Screen name="RoomDetailScreen" component={RoomDetailScreen} options={{
-          headerShown: true,
-          headerRight: () => (
-            <Button title="Logout" onPress={handleLogout} />
-          ),
-        }} />
-        <Stack.Screen name="NfcLinkScreen" component={NFCLinkScreen} options={{
-          headerShown: true,
-          headerRight: () => (
-            <Button title="Logout" onPress={handleLogout} />
-          ),
-        }} />
-        <Stack.Screen name="LobbyScreen" component={LobbyScreen} options={{
-          headerShown: true,
-          headerRight: () => (
-            <Button title="Logout" onPress={handleLogout} />
-          ),
-        }} />
+        <Stack.Screen name="RoomScreen" component={RoomScreen}
+
+          options={{
+            headerTitle: '',
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: 'black', // Change background color
+            },
+            headerRight: () => (
+              <LogOutButton onPress={handleLogout} />),
+          }} />
+        <Stack.Screen name="RoomDetailScreen" component={RoomDetailScreen}
+          options={{
+            headerTitle: '',
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: 'black', // Change background color
+            },
+            headerRight: () => (
+              <LogOutButton onPress={handleLogout} />),
+          }}
+        />
+        <Stack.Screen name="NfcLinkScreen" component={NFCLinkScreen}
+          // options={{
+          //   headerTransparent: true, // Remove header background
+          //   headerTitle: 'Link Your NFC Card', // Change header title
+          // headerStyle: {
+          //   backgroundColor: 'black', // Change background color
+          // },
+          //   headerTitleStyle: {
+          //     // fontWeight: 'bold', // Change font weight
+          //     fontSize: 20, // Font size
+          //     color: 'white', // Change text color
+          //   },
+          // }}
+          options={{
+            headerShown: true,
+            headerTitle: '',
+            headerStyle: {
+              backgroundColor: 'black', // Change background color
+            },
+            headerRight: () => (
+              <LogOutButton onPress={handleLogout} />
+            ),
+          }}
+        />
+        <Stack.Screen name="LobbyScreen" component={LobbyScreen}
+          options={{
+            headerTitle: '',
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: 'black', // Change background color
+            },
+            headerRight: () => (
+              <LogOutButton onPress={handleLogout} />),
+          }} />
         <Stack.Screen name="LoadingScreen" component={LoadingScreen} options={{
           headerShown: false,
         }} />
         <Stack.Screen name="GameScreen" component={GameScreen} options={{
           headerShown: true,
           headerRight: () => (
-            <Button title="Logout" onPress={handleLogout} />
-          ),
+            <LogOutButton onPress={handleLogout} />),
 
         }} />
         <Stack.Screen name="ReportScreen" component={ReportScreen} options={{
@@ -184,6 +231,12 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+  backgroundImage: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: -1000,
   },
 });
 
