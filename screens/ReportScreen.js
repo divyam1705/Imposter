@@ -97,7 +97,6 @@ const ReportScreen = ({route, navigation}) => {
           <View
             key={item.uid}
             title={''}
-            onPress={() => castVote(item)}
             disabled={voted}
             style={[
               styles.playerContainer,
@@ -120,7 +119,12 @@ const ReportScreen = ({route, navigation}) => {
             <Text className="text-white font-bold text-2xl">
               Vote for {players[item].name}
             </Text>
-            <Icon name={'closecircleo'} size={30} color={'red'} />
+            <Button
+              title="vote"
+              onPress={() => castVote(item)}
+              className="rounded-lg">
+              <Icon name={'closecircleo'} size={30} color={'red'} />
+            </Button>
           </View>
         )}
       />

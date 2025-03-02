@@ -9,8 +9,8 @@ const LoadingScreen = ({route, navigation}) => {
   //   const navigation = useNavigation();
   useEffect(() => {
     if (players && userId) {
-      const userIsImposter = players[userId]?.imposter;
-
+      const userIsImposter = players[userId].imposter;
+      console.log('Imposter Status', userIsImposter, players, userId);
       setIsImposter(userIsImposter);
       setRoleMessage(
         userIsImposter ? 'You are the Imposter!' : 'You are a Crewmate!',

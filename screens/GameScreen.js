@@ -74,7 +74,7 @@ const GameScreen = ({route, navigation}) => {
   // }, []);
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{flex: 1, backgroundColor: 'black'}}>
       {/* Header Section */}
       <View
         style={{
@@ -83,7 +83,7 @@ const GameScreen = ({route, navigation}) => {
           justifyContent: 'center',
           paddingHorizontal: 16,
           paddingVertical: 12,
-          backgroundColor: 'white',
+          backgroundColor: 'black',
         }}>
         <TouchableOpacity className="bg-blue-500 flex justify-center items-center px-8 py-5 rounded-xl ">
           <Text className="text-2xl font-bold text-white ">{roomId}</Text>

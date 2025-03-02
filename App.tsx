@@ -49,7 +49,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const Stack = createStackNavigator();
 
 
-// LogBox.ignoreAllLogs(true); //temp
+LogBox.ignoreAllLogs(true); //temp
 
 
 const LogOutButton = ({ onPress }: { onPress: () => void }) => {

@@ -55,7 +55,7 @@ const LobbyScreen = ({route, navigation}) => {
     await updateDoc(doc(db, 'rooms', roomId), {players: updatedPlayers});
     await updateDoc(doc(db, 'rooms', roomId), {gameStarted: true});
     navigation.navigate('LoadingScreen', {
-      players: room.players,
+      players: updatedPlayers,
       roomId,
       userId: currentUser.uid,
     });

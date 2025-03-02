@@ -72,11 +72,13 @@ const AgoraApp = () => {
         const init = async () => {
             await setupVoiceSDKEngine();
             setupEventHandler();
+            await join();
         };
         const timer = setTimeout(async () => {
-            leave();
+            await leave();
         }, 30000);
-        init(); join();
+        init();
+        // join();
         return () => {
             clearTimeout(timer);
             cleanupAgoraEngine(); // Ensure this is synchronous
