@@ -1,8 +1,8 @@
 # Imposter: Real-Life Among Us
 
 
+[![Imposter video](https://i.ytimg.com/vi/Fu0gstd7Olg/hqdefault.jpg?sqp=-oaymwFBCNACELwBSFryq4qpAzMIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB8AEB-AH-CYAC0AWKAgwIABABGD4gZShXMA8=&rs=AOn4CLBKZnSrZxHmPXxEReUUBoWOp77O5w)](https://youtu.be/Fu0gstd7Olg)
 
-![](https://youtu.be/Fu0gstd7Olg)
 
 
 
