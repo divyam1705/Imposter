@@ -1,7 +1,11 @@
 # Imposter: Real-Life Among Us
-<video width="320" height="240" controls>
-  <source src="https://player.vimeo.com/video/1061763802?h=d2f47178c6" type="video/mp4">
-</video>
+
+
+
+![](https://youtu.be/Fu0gstd7Olg)
+
+
+
 ## Inspiration
 Our team was inspired by the desire to combine physical activity with gaming elements. We wanted to create an experience that encourages people to move around while enjoying the strategic and social aspects of gaming. Imposter brings the best of both worlds - staying fit while having fun with friends in an interactive real-world environment.
 
