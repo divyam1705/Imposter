@@ -1,97 +1,51 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Imposter: Real-Life Among Us
+<video width="320" height="240" controls>
+  <source src="https://player.vimeo.com/video/1061763802?h=d2f47178c6" type="video/mp4">
+</video>
+## Inspiration
+Our team was inspired by the desire to combine physical activity with gaming elements. We wanted to create an experience that encourages people to move around while enjoying the strategic and social aspects of gaming. Imposter brings the best of both worlds - staying fit while having fun with friends in an interactive real-world environment.
 
-# Getting Started
+## What it does
+Imposter is essentially "Among Us but in real life." The game brings the popular digital experience into the physical world, where players must complete tasks, identify impostors, and survive in a real-world setting. Players interact with their environment and each other through their mobile devices, creating an immersive gaming experience that unfolds in the real world.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## How we built it
+We utilized a comprehensive tech stack to bring Imposter to life:
+- Figma for UI design and prototyping
+- React Native for mobile development
+- Firebase for backend infrastructure and real-time updates
+- NFC technology for physical interactions with game elements
+- Bluetooth Low Energy (BLE) for proximity detection between players
 
-## Step 1: Start Metro
+## Challenges we ran into
+Our development journey wasn't without obstacles:
+- Implementing NFC reading and writing capabilities
+- Integrating voice channel communication for player discussions
+- Accurately measuring distance using Bluetooth RSSI signal strength
+- Working with React Native CLI presented numerous technical hurdles
+- Learning Figma on the fly to create polished UI designs
+- Developing a real-time map that accurately reflects player positions
+- Implementing reliable location tracking
+- Debugging issues across multiple platforms and technologies
+- Managing our excessive caffeine intake during the hackathon
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Accomplishments that we're proud of
+Despite the challenges, we achieved significant milestones:
+- Successfully implemented NFC reading and writing functionality
+- Created a working voice channel for player communication
+- Established reliable Bluetooth connections for proximity detection
+- Achieved our Minimum Viable Product within the hackathon timeframe
+- Implemented numerous real-time features that enhance gameplay experience
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## What we learned
+The hackathon was a tremendous learning opportunity:
+- Gained proficiency in Figma for UI/UX design
+- Developed PATIENCE when facing technical challenges
+- Strengthened our teamwork and collaboration skills
+- Discovered that React Native presents more challenges compared to standard React development
 
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## What's next for Imposter
+We have exciting plans for future development:
+- Adding a "corrupt" feature to introduce new gameplay mechanics
+- Implementing AI to generate tasks for crew members to solve
+- Integrating AR technology for collectible items in the physical world
+- Developing a dynamic zone-shrinking map based on time elapsed, adding urgency to gameplay
